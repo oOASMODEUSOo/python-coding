@@ -7,16 +7,15 @@ import tkinter.messagebox as tkmessage
 from tkinter import ttk
 
 master = Tk()
-#master.iconbitmap("store.ico")
+# master.iconbitmap("store.ico")
 
-'''
+
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="root",
-  database="testinghy"  
+    host="localhost",
+    user="root",
+    password="root",
+    database="testinghy"
 )
-'''
 
 master.geometry("500x300")
 master.minsize(300, 300)
@@ -33,21 +32,32 @@ def new_bill():
     newbill.title("New Bill")
     newbill.geometry("850x700")
     newbill.maxsize(850, 700)
-    #newbill.iconbitmap("store.ico")
+    # newbill.iconbitmap("store.ico")
+    '''
+        mycur=mydb.cursor()
+        mycur.execute(f"CREATE TABLE {}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)")
+
+        mydb.close()
+    '''
+
+    '''
+    mycursor.execute("SHOW TABLES")
+    result=mycursor.fetchall()
+
+    for i in result:
+        print(result)
+    '''
 
     # def under func under
     def add():
         # sql commands and treeview commands togo
-        '''
-        mycursor=mydb.cursor()
-        mycursor.execute(f"")
 
+        mycursor = mydb.cursor()
+        mycursor.execute("show tables")
 
-        '''
-
-        itemval.delete(0,'end')
-        priceval.delete(0,'end')
-        quantityval.delete(0,'end')
+        itemval.delete(0, 'end')
+        priceval.delete(0, 'end')
+        quantityval.delete(0, 'end')
 
     def remove():
         pass
@@ -88,12 +98,12 @@ def new_bill():
     bu1_add.place(x=60, y=300, width=100, height=20)
     bu2_remove.place(x=60, y=330, width=100, height=20)
 
-    #treeview data--------------------------------------------------------------------------------------------------
+    # treeview data--------------------------------------------------------------------------------------------------
 
-    right_frame=Frame(newbill, bg="cyan", borderwidth=1, relief="ridge")
+    right_frame = Frame(newbill, bg="cyan", borderwidth=1, relief="ridge")
     right_frame.pack(side="left", anchor="nw")
 
-    tree_scroll=Scrollbar(right_frame)
+    tree_scroll = Scrollbar(right_frame)
     tree_scroll.pack(side="right", fill=Y)
 
     my_tree = ttk.Treeview(right_frame, yscrollcommand=tree_scroll.set)
@@ -114,7 +124,6 @@ def new_bill():
     my_tree.heading("Price", text="Price", anchor="w")
     my_tree.heading("Quantity", text="Quantity", anchor="center")
     my_tree.heading("T. Price", text="Total Price", anchor="w")
-
 
     # Enrty of the values--------------------------------------------------------------------------------------------
 
@@ -149,7 +158,7 @@ def remove():
     remove_window.geometry("360x200")
     remove_window.minsize(380, 200)
     remove_window.maxsize(380, 200)
-    #remove_window.iconbitmap("store.ico")
+    # remove_window.iconbitmap("store.ico")
 
     frame_remove_bill = Frame(remove_window, bg="cyan", borderwidth=4, relief="ridge")
     frame_remove_bill.pack(fill=X)
