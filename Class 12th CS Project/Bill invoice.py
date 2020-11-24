@@ -1,7 +1,7 @@
 # Importing the modules and intialising the stuff
 
 from tkinter import *
-import mysql.connector
+#import mysql.connector
 from datetime import datetime
 import tkinter.messagebox as tkmessage
 from tkinter import ttk
@@ -35,7 +35,7 @@ def new_bill():
     # newbill.iconbitmap("store.ico")
     '''
         mycur=mydb.cursor()
-        mycur.execute(f"CREATE TABLE {}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)")
+        mycur.execute(f"CREATE TABLE New(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)")
 
         mydb.close()
     '''
@@ -154,6 +154,18 @@ def remove():
         tkmessage.showinfo("Alert", "All The Previous Bills Have Been Removed")
         remove_window.destroy()
 
+    '''
+    mycur=mydb.connect()
+    mycur.execute("show tables")
+    
+    result=mycur.fetchall()
+    
+    for t in results
+        mycur.execute(f"DROP table {t}")
+        
+    mycur.close
+    '''
+
     remove_window = Tk()
     remove_window.geometry("360x200")
     remove_window.minsize(380, 200)
@@ -165,6 +177,11 @@ def remove():
     label_del = Label(frame_remove_bill, text="Are You Sure You Want To\nRemove All Previous Bills?", font="goldman 20")
     label_del.pack()
     Button(remove_window, text="YES", relief="raised", font="goldman 15", command=del_tables).pack()
+
+    def del_tables():
+        tkmessage.showinfo("Alert", "All The Previous Bills Have Been Removed")
+        remove_window.destroy()
+
 
     remove_window.mainloop()
 
