@@ -14,7 +14,7 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="root",
-    database="testinghy"
+    database="bill"
 )
 
 master.geometry("500x300")
@@ -27,113 +27,130 @@ master.title("bill invoice")
 # This happens when i click new bill----------------------------------------------------------------------------------
 
 def new_bill():
-    # print("generating new bill")
-    newbill = Tk()
-    newbill.title("New Bill")
-    newbill.geometry("850x700")
-    newbill.maxsize(850, 700)
-    # newbill.iconbitmap("store.ico")
 
-    #mycur=mydb.cursor()
-    #create=f"CREATE TABLE {Customer_name}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)"
-    #print(create)
-    #mycur.execute(create)
+    def gen_bill():
+        #customer.destroy()          #this might come handy later in creating table
+
+        # print("generating new bill")
+        newbill = Tk()
+        newbill.title("New Bill")
+        newbill.geometry("850x700")
+        newbill.maxsize(850, 700)
+
+        # newbill.iconbitmap("store.ico")
+
+        mycur=mydb.cursor()
+        create=f"CREATE TABLE {cust_value.get()}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)"
+        mycur.execute(create)
+
+        # def under func under
+        def add():
+            # sql commands and treeview commands togo
+
+            mycursor = mydb.cursor()
+            mycursor.execute("show tables")
+
+            itemval.delete(0, 'end')
+            priceval.delete(0, 'end')
+            quantityval.delete(0, 'end')
+
+        def remove():
+            pass
+            '''
+            #psedo sql command:
+
+            '''
+
+        def total():
+            tkmessage.showinfo("Total", "Total amount is: ")
+
+        def exit():
+            newbill.destroy()
+
+        upper_frame = Frame(newbill, bg="skyblue", borderwidth=3, relief="raised")
+        upper_frame.pack(fill=X)
+        title = Label(upper_frame, text=f"Bill Generated at {datetime.now()}", fg="orange", font="goldman 19 bold")
+        title.pack()
+
+        lower_frame = Frame(newbill, bg="skyblue", borderwidth=3, relief="raised")
+        lower_frame.pack(side="bottom", anchor="s", fill=X)
+
+        bu3_total = Button(lower_frame, text="Total Amount", bg="grey", font="11", relief="raised", command=total)
+        bu3_total.grid(row=1, column=5, ipadx=164)
+        bu4_exit = Button(lower_frame, text="Close Bill", bg="grey", font="11", relief="raised", command=exit)
+        bu4_exit.grid(row=1, column=6, ipadx=165)
+
+        left_frame = Frame(newbill, bg="orange", borderwidth=4, relief="ridge")
+        left_frame.place(x=615, y=43, width=234, height=620)
+        item_label = Label(left_frame, text="Item", font="15")
+        item_label.place(x=20, y=200, width=60, height=20)
+        price_label = Label(left_frame, text="Price", font="15")
+        price_label.place(x=20, y=230, width=60, height=20)
+        quantity_label = Label(left_frame, text="Quantity", font="15")
+        quantity_label.place(x=20, y=260, width=60, height=20)
+        bu1_add = Button(left_frame, text="Add To List", bg="lightgrey", font="11", relief="raised", command=add)
+        bu2_remove = Button(left_frame, text="Remove", bg="lightgrey", font="11", relief="raised", command=remove)
+        bu1_add.place(x=60, y=300, width=100, height=20)
+        bu2_remove.place(x=60, y=330, width=100, height=20)
+
+        # treeview data--------------------------------------------------------------------------------------------------
+
+        right_frame = Frame(newbill, bg="cyan", borderwidth=1, relief="ridge")
+        right_frame.pack(side="left", anchor="nw")
+
+        tree_scroll = Scrollbar(right_frame)
+        tree_scroll.pack(side="right", fill=Y)
+
+        my_tree = ttk.Treeview(right_frame, yscrollcommand=tree_scroll.set)
+        my_tree.pack(fill=Y, ipady=200)
+
+        tree_scroll.config(command=my_tree.yview)
+
+        my_tree['columns'] = ("Item", "Price", "Quantity", "T. Price")
+
+        my_tree.column("#0", width=0, stretch=0)
+        my_tree.column("Item", anchor="w", width=200)
+        my_tree.column("Price", anchor="w", width=120)
+        my_tree.column("Quantity", anchor="center", width=120)
+        my_tree.column("T. Price", anchor="w", width=152)
+
+        my_tree.heading("#0", text="", anchor="w")
+        my_tree.heading("Item", text="Item", anchor="w")
+        my_tree.heading("Price", text="Price", anchor="w")
+        my_tree.heading("Quantity", text="Quantity", anchor="center")
+        my_tree.heading("T. Price", text="Total Price", anchor="w")
+
+        # Enrty of the values--------------------------------------------------------------------------------------------
+
+        item_entry = StringVar()
+        price_entry = IntVar()
+        quantity_entry = IntVar()
+
+        itemval = Entry(left_frame, textvariable=item_entry)
+        priceval = Entry(left_frame, textvariable=price_entry)
+        quantityval = Entry(left_frame, textvariable=quantity_entry)
+
+        itemval.place(x=90, y=200, width=110, height=20)
+        priceval.place(x=90, y=230, width=110, height=20)
+        quantityval.place(x=90, y=260, width=110, height=20)
+
+        # Enrty of the values--------------------------------------------------------------------------------------------
+
+        newbill.mainloop()
 
 
-    # def under func under
-    def add():
-        # sql commands and treeview commands togo
+    customer=Tk()
+    customer.geometry("200x100")
+    frame_customer=Frame(customer, bg="lightblue", borderwidth=2, relief="ridge")
+    frame_customer.pack(fill=BOTH)
+    Label(frame_customer, text="Customer Name").pack(anchor="center", fill=Y, ipady=5)
+    cust_name=StringVar()
+    cust_value=Entry(frame_customer, textvariable=cust_name, font="25")
+    cust_value.pack(anchor="center")
 
-        mycursor = mydb.cursor()
-        mycursor.execute("show tables")
+    Button(frame_customer,text="Generate Bill", bg="lightgreen", relief="raised", font="10", command=gen_bill).pack(anchor=CENTER, ipady=5)
 
-        itemval.delete(0, 'end')
-        priceval.delete(0, 'end')
-        quantityval.delete(0, 'end')
-
-    def remove():
-        pass
-        '''
-        #psedo sql command:
-
-        '''
-
-    def total():
-        tkmessage.showinfo("Total", "Total amount is: ")
-
-    def exit():
-        newbill.destroy()
-
-    upper_frame = Frame(newbill, bg="skyblue", borderwidth=3, relief="raised")
-    upper_frame.pack(fill=X)
-    title = Label(upper_frame, text=f"Bill Generated at {datetime.now()}", fg="orange", font="goldman 19 bold")
-    title.pack()
-
-    lower_frame = Frame(newbill, bg="skyblue", borderwidth=3, relief="raised")
-    lower_frame.pack(side="bottom", anchor="s", fill=X)
-
-    bu3_total = Button(lower_frame, text="Total Amount", bg="grey", font="11", relief="raised", command=total)
-    bu3_total.grid(row=1, column=5, ipadx=164)
-    bu4_exit = Button(lower_frame, text="Close Bill", bg="grey", font="11", relief="raised", command=exit)
-    bu4_exit.grid(row=1, column=6, ipadx=165)
-
-    left_frame = Frame(newbill, bg="orange", borderwidth=4, relief="ridge")
-    left_frame.place(x=615, y=43, width=234, height=620)
-    item_label = Label(left_frame, text="Item", font="15")
-    item_label.place(x=20, y=200, width=60, height=20)
-    price_label = Label(left_frame, text="Price", font="15")
-    price_label.place(x=20, y=230, width=60, height=20)
-    quantity_label = Label(left_frame, text="Quantity", font="15")
-    quantity_label.place(x=20, y=260, width=60, height=20)
-    bu1_add = Button(left_frame, text="Add To List", bg="lightgrey", font="11", relief="raised", command=add)
-    bu2_remove = Button(left_frame, text="Remove", bg="lightgrey", font="11", relief="raised", command=remove)
-    bu1_add.place(x=60, y=300, width=100, height=20)
-    bu2_remove.place(x=60, y=330, width=100, height=20)
-
-    # treeview data--------------------------------------------------------------------------------------------------
-
-    right_frame = Frame(newbill, bg="cyan", borderwidth=1, relief="ridge")
-    right_frame.pack(side="left", anchor="nw")
-
-    tree_scroll = Scrollbar(right_frame)
-    tree_scroll.pack(side="right", fill=Y)
-
-    my_tree = ttk.Treeview(right_frame, yscrollcommand=tree_scroll.set)
-    my_tree.pack(fill=Y, ipady=200)
-
-    tree_scroll.config(command=my_tree.yview)
-
-    my_tree['columns'] = ("Item", "Price", "Quantity", "T. Price")
-
-    my_tree.column("#0", width=0, stretch=0)
-    my_tree.column("Item", anchor="w", width=200)
-    my_tree.column("Price", anchor="w", width=120)
-    my_tree.column("Quantity", anchor="center", width=120)
-    my_tree.column("T. Price", anchor="w", width=152)
-
-    my_tree.heading("#0", text="", anchor="w")
-    my_tree.heading("Item", text="Item", anchor="w")
-    my_tree.heading("Price", text="Price", anchor="w")
-    my_tree.heading("Quantity", text="Quantity", anchor="center")
-    my_tree.heading("T. Price", text="Total Price", anchor="w")
-
-    # Enrty of the values--------------------------------------------------------------------------------------------
-
-    item_entry = StringVar()
-    price_entry = IntVar()
-    quantity_entry = IntVar()
-
-    itemval = Entry(left_frame, textvariable=item_entry)
-    priceval = Entry(left_frame, textvariable=price_entry)
-    quantityval = Entry(left_frame, textvariable=quantity_entry)
-
-    itemval.place(x=90, y=200, width=110, height=20)
-    priceval.place(x=90, y=230, width=110, height=20)
-    quantityval.place(x=90, y=260, width=110, height=20)
-
-    # Enrty of the values--------------------------------------------------------------------------------------------
-
-    newbill.mainloop()
+    customer.mainloop()
 
 
 # This happens when i click new bill----------------------------------------------------------------------------------
