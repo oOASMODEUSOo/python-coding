@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 root=Tk()
-root.geometry("450x550")
+root.geometry("500x550")
 root.title("TreeView Testing")
 
 tree_frame = Frame(root)
