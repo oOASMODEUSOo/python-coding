@@ -1,7 +1,7 @@
 # Importing the modules and intialising the stuff
 
 from tkinter import *
-#import mysql.connector
+import mysql.connector
 from datetime import datetime
 import tkinter.messagebox as tkmessage
 from tkinter import ttk
@@ -154,17 +154,17 @@ def remove():
         tkmessage.showinfo("Alert", "All The Previous Bills Have Been Removed")
         remove_window.destroy()
 
-    '''
-    mycur=mydb.connect()
-    mycur.execute("show tables")
-    
-    result=mycur.fetchall()
-    
-    for t in results
-        mycur.execute(f"DROP table {t}")
-        
-    mycur.close
-    '''
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SHOW TABLES")
+        result=mycursor.fetchall()
+
+        for x in result:
+            sql=f"DROP TABLE {x[0]};"    #if sql doesnt accept f string then what u can do is make variable and pass that variablle in execute command
+            #print(sql)
+
+            mycursor.execute(sql)
+
 
     remove_window = Tk()
     remove_window.geometry("360x200")
