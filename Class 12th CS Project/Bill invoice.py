@@ -33,20 +33,12 @@ def new_bill():
     newbill.geometry("850x700")
     newbill.maxsize(850, 700)
     # newbill.iconbitmap("store.ico")
-    '''
-        mycur=mydb.cursor()
-        mycur.execute(f"CREATE TABLE New(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)")
 
-        mydb.close()
-    '''
+    #mycur=mydb.cursor()
+    #create=f"CREATE TABLE {Customer_name}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)"
+    #print(create)
+    #mycur.execute(create)
 
-    '''
-    mycursor.execute("SHOW TABLES")
-    result=mycursor.fetchall()
-
-    for i in result:
-        print(result)
-    '''
 
     # def under func under
     def add():
