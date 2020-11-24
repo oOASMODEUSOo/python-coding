@@ -62,21 +62,47 @@ def new_bill():
             priceval.delete(0, 'end')
             quantityval.delete(0, 'end')
 
+            for record in my_tree.get_children():
+                my_tree.delete(record)
+
             # feeding data into tree view
             fetchdata=f"select * from {cust_value.get()}"
             mycur.execute(fetchdata)
             result_table_data=mycur.fetchall()
-            print(result_table_data)
+            #print(result_table_data)
+            length=(len(result_table_data))
+
+            count = 0
+            for rec in result_table_data:
+                my_tree.insert(parent='', index='end', iid=count, text="", values=(rec[0], rec[1], rec[2], rec[3]))
+                count += 1
             #print(mycur.rowcount)
 
 
-
         def remove():
-            pass
-            '''
-            #psedo sql command:
 
-            '''
+            def remove_item():
+                removerun=f"DELETE FROM {cust_value.get()} WHERE Item = '{del_value.get()}'"
+                mycur.execute(removerun)
+                mydb.commit()
+
+                del_value.delete(0,'end')
+                remove_win.destroy()
+
+            remove_win=Tk()
+            remove_win.geometry("200x100")
+            remove_frame=Frame(remove_win, bg="lightblue", borderwidth=2, relief="ridge")
+            remove_frame.pack(fill=BOTH)
+            Label(remove_frame, text="Item Name").pack(anchor="center", fill=Y, ipady=5)
+            del_name=StringVar()
+            del_value=Entry(remove_frame, textvariable=del_name, font="25")
+            del_value.pack(anchor="center")
+
+            Button(remove_frame,text="Remove Item", bg="lightgreen", relief="raised", font="10", command=remove_item).pack(anchor=CENTER, ipady=5)
+
+
+
+            customer.mainloop()
 
         def total():
             command=f"SELECT SUM(TPrice) from {cust_value.get()}"
