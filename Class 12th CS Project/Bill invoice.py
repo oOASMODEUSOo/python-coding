@@ -40,19 +40,36 @@ def new_bill():
         # newbill.iconbitmap("store.ico")
 
         mycur=mydb.cursor()
-        create=f"CREATE TABLE {cust_value.get()}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT)"
+        create=f"CREATE TABLE {cust_value.get()}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT, TPrice INT)"
         mycur.execute(create)
 
         # def under func under
         def add():
             # sql commands and treeview commands togo
 
-            mycursor = mydb.cursor()
-            mycursor.execute("show tables")
+            mycur = mydb.cursor()
+            price=int(priceval.get())
+            quantity=int(quantityval.get())
+            tprice=price*quantity
+
+            sql=f"INSERT INTO {cust_value.get()} VALUES ('{itemval.get()}',{priceval.get()},{quantityval.get()}, {tprice})"
+            #print(sql)
+            #print(tprice)
+            mycur.execute(sql)
+            mydb.commit()
 
             itemval.delete(0, 'end')
             priceval.delete(0, 'end')
             quantityval.delete(0, 'end')
+
+            # feeding data into tree view
+            fetchdata=f"select * from {cust_value.get()}"
+            mycur.execute(fetchdata)
+            result_table_data=mycur.fetchall()
+            print(result_table_data)
+            #print(mycur.rowcount)
+
+
 
         def remove():
             pass
@@ -62,7 +79,11 @@ def new_bill():
             '''
 
         def total():
-            tkmessage.showinfo("Total", "Total amount is: ")
+            command=f"SELECT SUM(TPrice) from {cust_value.get()}"
+            #print(command)
+            mycur.execute(command)
+            result=mycur.fetchall()
+            tkmessage.showinfo("Total", f"Total amount is: {result[0][0]}")
 
         def exit():
             newbill.destroy()
@@ -93,7 +114,23 @@ def new_bill():
         bu1_add.place(x=60, y=300, width=100, height=20)
         bu2_remove.place(x=60, y=330, width=100, height=20)
 
-        # treeview data--------------------------------------------------------------------------------------------------
+        # Enrty of the values--------------------------------------------------------------------------------------------
+
+        item_entry = StringVar()
+        price_entry = IntVar()
+        quantity_entry = IntVar()
+
+        itemval = Entry(left_frame, textvariable=item_entry)
+        priceval = Entry(left_frame, textvariable=price_entry)
+        quantityval = Entry(left_frame, textvariable=quantity_entry)
+
+        itemval.place(x=90, y=200, width=110, height=20)
+        priceval.place(x=90, y=230, width=110, height=20)
+        quantityval.place(x=90, y=260, width=110, height=20)
+
+        # Enrty of the values------------------------------------------------------------------------------------------
+
+        # treeview data------------------------------------------------------------------------------------------------
 
         right_frame = Frame(newbill, bg="cyan", borderwidth=1, relief="ridge")
         right_frame.pack(side="left", anchor="nw")
@@ -120,21 +157,6 @@ def new_bill():
         my_tree.heading("Quantity", text="Quantity", anchor="center")
         my_tree.heading("T. Price", text="Total Price", anchor="w")
 
-        # Enrty of the values--------------------------------------------------------------------------------------------
-
-        item_entry = StringVar()
-        price_entry = IntVar()
-        quantity_entry = IntVar()
-
-        itemval = Entry(left_frame, textvariable=item_entry)
-        priceval = Entry(left_frame, textvariable=price_entry)
-        quantityval = Entry(left_frame, textvariable=quantity_entry)
-
-        itemval.place(x=90, y=200, width=110, height=20)
-        priceval.place(x=90, y=230, width=110, height=20)
-        quantityval.place(x=90, y=260, width=110, height=20)
-
-        # Enrty of the values--------------------------------------------------------------------------------------------
 
         newbill.mainloop()
 
