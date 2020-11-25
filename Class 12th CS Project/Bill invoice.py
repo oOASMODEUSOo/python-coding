@@ -1,5 +1,4 @@
 # Importing the modules and intialising the stuff
-
 from tkinter import *
 import mysql.connector
 from datetime import datetime
@@ -7,8 +6,7 @@ import tkinter.messagebox as tkmessage
 from tkinter import ttk
 
 master = Tk()
-# master.iconbitmap("store.ico")
-
+master.iconbitmap("store.ico")
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -21,29 +19,22 @@ master.geometry("500x300")
 master.minsize(300, 300)
 master.title("bill invoice")
 
-
-# defining global functions
-
 # This happens when i click new bill----------------------------------------------------------------------------------
 
 def new_bill():
 
     def gen_bill():
         #customer.destroy()          #this might come handy later in creating table
-
-        # print("generating new bill")
         newbill = Tk()
         newbill.title("New Bill")
         newbill.geometry("850x700")
         newbill.maxsize(850, 700)
-
-        # newbill.iconbitmap("store.ico")
+        newbill.iconbitmap("store.ico")
 
         mycur=mydb.cursor()
         create=f"CREATE TABLE {cust_value.get()}(Item CHAR(30) PRIMARY KEY,Price INT, Quantity INT, TPrice INT)"
         mycur.execute(create)
-
-        # def under func under
+        
         def add():
             # sql commands and treeview commands togo
 
@@ -74,9 +65,7 @@ def new_bill():
             for rec in result_table_data:
                 my_tree.insert(parent='', index='end', iid=count, text="", values=(rec[0], rec[1], rec[2], rec[3]))
                 count += 1
-            #print(mycur.rowcount)
-
-
+            
         def remove():
 
             def remove_item():
@@ -109,8 +98,6 @@ def new_bill():
             del_value.pack(anchor="center")
 
             Button(remove_frame,text="Remove Item", bg="lightgreen", relief="raised", font="10", command=remove_item).pack(anchor=CENTER, ipady=5)
-
-
 
             customer.mainloop()
 
@@ -163,8 +150,6 @@ def new_bill():
         itemval.place(x=90, y=200, width=110, height=20)
         priceval.place(x=90, y=230, width=110, height=20)
         quantityval.place(x=90, y=260, width=110, height=20)
-
-        # Enrty of the values------------------------------------------------------------------------------------------
 
         # treeview data------------------------------------------------------------------------------------------------
 
@@ -228,8 +213,7 @@ def remove():
 
         for x in result:
             sql=f"DROP TABLE {x[0]};"    #if sql doesnt accept f string then what u can do is make variable and pass that variablle in execute command
-            #print(sql)
-
+            
             mycursor.execute(sql)
 
 
@@ -237,7 +221,7 @@ def remove():
     remove_window.geometry("360x200")
     remove_window.minsize(380, 200)
     remove_window.maxsize(380, 200)
-    # remove_window.iconbitmap("store.ico")
+    remove_window.iconbitmap("store.ico")
 
     frame_remove_bill = Frame(remove_window, bg="cyan", borderwidth=4, relief="ridge")
     frame_remove_bill.pack(fill=X)
@@ -252,17 +236,10 @@ def remove():
 
     remove_window.mainloop()
 
-
-# This happens when i click Remove Previous Bills---------------------------------------------------------------------
-
 # This happens when i click LogOff------------------------------------------------------------------------------------
 
 def LogOff():
     master.destroy()
-
-
-# This happens when i click LogOff------------------------------------------------------------------------------------
-
 
 # starter window------------------------------------------------------------------------------------------------------
 
