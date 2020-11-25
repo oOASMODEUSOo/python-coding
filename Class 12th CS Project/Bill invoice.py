@@ -69,8 +69,6 @@ def new_bill():
             fetchdata=f"select * from {cust_value.get()}"
             mycur.execute(fetchdata)
             result_table_data=mycur.fetchall()
-            #print(result_table_data)
-            length=(len(result_table_data))
 
             count = 0
             for rec in result_table_data:
@@ -87,6 +85,18 @@ def new_bill():
                 mydb.commit()
 
                 del_value.delete(0,'end')
+
+                for record in my_tree.get_children():
+                    my_tree.delete(record)
+
+                fetchdata = f"select * from {cust_value.get()}"
+                mycur.execute(fetchdata)
+                result_table_data = mycur.fetchall()
+                count = 0
+                for rec in result_table_data:
+                    my_tree.insert(parent='', index='end', iid=count, text="", values=(rec[0], rec[1], rec[2], rec[3]))
+                    count += 1
+
                 remove_win.destroy()
 
             remove_win=Tk()
