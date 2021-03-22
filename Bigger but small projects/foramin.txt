@@ -23,5 +23,5 @@ advanced level:
 1. chatbot
 2. virtual assistant
 3. web application with django
-4. 
+4. web scrapping
 5. 
