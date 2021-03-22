@@ -24,4 +24,4 @@ advanced level:
 2. virtual assistant
 3. web application with django
 4. web scrapping
-5. 
+5. multiplayer game - connect4
