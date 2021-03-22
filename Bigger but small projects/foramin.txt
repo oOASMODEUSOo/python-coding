@@ -1,1 +1,27 @@
+projects in python:
 
+beginner level:
+1. desktop notifier app
+2. website blocker
+3. tic tac toe
+4. 
+5. binary search algorithm
+6. hangman
+7.
+8.
+9.
+10.
+
+intermediate level:
+1. snake game
+2. 
+3. 
+4. 
+5. 
+
+advanced level:
+1. 
+2. 
+3. 
+4. 
+5. 
