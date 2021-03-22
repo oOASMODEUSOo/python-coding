@@ -20,8 +20,8 @@ intermediate level:
 5. 
 
 advanced level:
-1. 
-2. 
-3. 
+1. chatbot
+2. virtual assistant
+3. web application with django
 4. 
 5. 
