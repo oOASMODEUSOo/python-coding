@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import smtplib
 
 URL="https://www.amazon.in/gp/product/B079S811J3/ref=ox_sc_act_image_1?smid=A14CZOWI0VEHLG&psc=1"
 
@@ -20,3 +21,31 @@ def price_check():
 
     converted_price = int(price[1:5])
     print(converted_price)
+
+def email_sender():
+    sender = 'botmail9000@gmail.com'
+    recievers = 'ojas.off2003@gmail.com'
+    password = 'BotEmail0402'
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+
+    server.login(sender, password)
+
+    subject = 'Test Subject'
+    body = 'Test Body'
+
+    message = f"Subject: {subject} \n \n{body}"
+
+    server.sendmail(
+        sender,
+        recievers,
+        message
+    )
+
+    print("email sent")
+    server.quit()
+
+
