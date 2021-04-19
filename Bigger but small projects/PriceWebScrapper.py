@@ -37,8 +37,8 @@ def email_sender():
 
     server.login(sender, password)
 
-    subject = 'Test Subject'
-    body = 'Test Body'
+    subject = 'ALERT MEGA ALERT'
+    body = 'Price of the product you were searching for just went down. click the link to buy- https://www.amazon.in/gp/product/B079S811J3/ref=ox_sc_act_image_1?smid=A14CZOWI0VEHLG&psc=1'
 
     message = f"Subject: {subject} \n \n{body}"
 
