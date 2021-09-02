@@ -36,7 +36,7 @@ class url_shortner:
 
             self.short_output = tkinter.Entry(self.master, width=34, font="14", bg="lightgrey",
                                        relief="groove", borderwidth=2)
-            self.short_output.insert(self.shorturl)
+            self.short_output.insert(tkinter.END, self.shorturl)
             self.short_output.place(x=100, y=90)
 
     def expander(self):
@@ -49,7 +49,7 @@ class url_shortner:
 
             self.expand_output = tkinter.Entry(self.master, width=34, font="14", bg="lightgrey",
                                        relief="groove", borderwidth=2)
-            self.expand_output.insert(str(self.expand))
+            self.expand_output.insert(tkinter.END, self.expand)
             self.expand_output.place(x=100, y=90)
 
 #start of the programm
